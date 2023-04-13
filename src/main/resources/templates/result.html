@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+<body>
+    <!--If display = true => record based on orderId exist-->
+    <table data-th-if="${display}" data-th-object="${order}">
+        <tr>
+            <td>Order Id:</td>
+            <td data-th-text="*{orderId}"></td>
+        </tr>
+
+        <tr>
+            <td> Order Date:</td>
+            <td data-th-text="*{orderDate}"></td>
+        </tr>
+
+        <tr>
+            <td>Customer Id:</td>
+            <td data-th-text="*{customerId}"></td>
+        </tr>
+
+        <tr>
+            <td>Initial Total Price:</td>
+            <td data-th-text="*{totalPrice}"></td>
+        </tr>
+
+        <tr>
+            <td>Total Discount:</td>
+            <td data-th-text="*{totalDiscount}"></td>
+        </tr>
+
+        <tr>
+            <td>Total Price After Discount:</td>
+            <td data-th-text="*{totalDiscountedPrice}"></td>
+        </tr>
+
+        <tr>
+            <td>Total Cost Price:</td>
+            <td data-th-text="*{totalCostPrice}"></td>
+        </tr>
+
+    </table>
+
+    <!--If no record is found based on orderId-->
+    <div data-th-if="${error}">
+        <h1>Invalid Order Id</h1>
+    </div>
+</body>
+</html>
