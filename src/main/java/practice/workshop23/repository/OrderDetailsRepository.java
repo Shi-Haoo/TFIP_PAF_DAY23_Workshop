@@ -26,14 +26,25 @@ public class OrderDetailsRepository {
         System.out.println("SQL result set: " + rs);
 
         while(rs.next()){
-                // if(isAllNullValues(rs))
-                // return null;
 
-                orderDeets.add(OrderDetails.createFromSQLResults(rs));
+            /* 
+            Q: why is my list forever not empty aka orderDeets.isEmpty() always false??
+            
+            Ans: 
+            When we search for order_id that does not exist in record, sql will return null values
+            for all the fields including order_id. So while(rs.next()) is true even when order_id 
+            cannot be found in record. => List will never be empty unless we add an if(rs.getInt("order_id") != 0).
+            order_id will be returned as 0 if it is null. So this help to prevent rs which contains non existent order_id
+            from being added to list. 
+            Without if condition, list will not be empty and thymeleaf will throw an error because 
+            it cannot parse null values*/
+
+            if(rs.getInt("order_id") != 0)
+            orderDeets.add(OrderDetails.createFromSQLResults(rs));
     
             } 
         
-            //why is my list forever not empty??
+            
         if(orderDeets.isEmpty()){
 
             System.out.println(">>>>>>>>> list is empty");
@@ -43,26 +54,4 @@ public class OrderDetailsRepository {
 
         return orderDeets.get(0);
     }
-
-    // public Boolean isAllNullValues(SqlRowSet rs){
-
-    //     boolean allNull = true;
-
-        
-    //         for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-    //             if (rs.getObject(i) != null) {
-    //                 allNull = false;
-    //                 break;
-    //             }
-    //         }
-            
-        
-    //     if (allNull) {
-    //         System.out.println("All values in the result set are null");
-    //     } 
-
-    //     return allNull;
-    // }
-
-
 }

@@ -38,8 +38,9 @@ public class OrderDetailsController {
         if(od == null){
             model.addAttribute("display", false);
             model.addAttribute("error", true);
+            return "result";
         }
-
+        System.out.println(od.toString());
         model.addAttribute("display", true);
         model.addAttribute("error", false);
         model.addAttribute("order", od);
